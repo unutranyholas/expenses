@@ -1,0 +1,61 @@
+<template name="shortStats">
+	<div class="short-stats">
+		<div>
+			<dl>
+				<dt>Month</dt><dd>{{ getStats 30 "sum" }}</dd>
+			</dl>
+			<div class="chart">
+				<div class="daily" style="width: {{ getStats 30 'per' 'daily'}}"></div><div class="monthly" style="width: {{ getStats 30 'per' 'monthly'}}"></div><div class="extra" style="width: {{ getStats 30 'per' 'extra'}}"></div>
+			</div>
+			<dl>
+				<dt><em>per day</em></dt><dd><em>{{ getStats 30 "avr" }}</em></dd>
+			</dl>
+			
+		</div>
+		<div>
+			<dl>
+				<dt>Week</dt><dd>{{ getStats 7 "sum"}}</dd>
+			</dl>
+			<div class="chart">
+				<div class="daily" style="width: {{ getStats 7 'per' 'daily'}}"></div><div class="monthly" style="width: {{ getStats 7 'per' 'monthly'}}"></div><div class="extra" style="width: {{ getStats 7 'per' 'extra'}}"></div>
+			</div>
+			<dl>
+				<dt><em>per day</em></dt><dd><em>{{ getStats 7 "avr" }}</em></dd>
+			</dl>
+
+		</div>
+		<div>
+			<dl>
+				<dt>Today</dt><dd>{{ getStats 1 "sum" }}</dd>
+			</dl>
+			<div class="chart">
+				<div class="daily" style="width: {{ getStats 1 'per' 'daily'}}"></div><div class="monthly" style="width: {{ getStats 1 'per' 'monthly'}}"></div><div class="extra" style="width: {{ getStats 1 'per' 'extra'}}"></div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="stats">
+	<div class="stats">
+		{{> average}}
+		{{> distribution}}
+	</div>
+</template> 	
+
+<template name="average">
+	<h2>Average daily expenses</h2>
+	<div class="graph">
+		<svg id="average"></svg>
+	</div>
+</template>
+
+<template name="distribution">
+	<h2>Weekday/time distribution</h2>
+	<div class="graph">
+		<svg id="distribution"></svg>
+	</div>
+
+	
+</template>
+
+

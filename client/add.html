@@ -1,0 +1,20 @@
+<template name="add">
+	<form class="add-record">
+	<div class="type-selector">
+		<ul>
+			<li><input type="radio" name="type" value="daily" id="daily" checked="checked" /><label for="daily" class="daily">Daily</label></li>
+			<li><input type="radio" name="type" value="monthly" id="monthly" /><label class="monthly" for="monthly">Monthly</label></li>
+			<li><input type="radio" name="type" value="extra" id="extra" /><label class="extra" for="extra">Extra</label></li>
+		</ul>
+	</div>
+
+
+	<div class="card">
+		<input type="text" placeholder="$" min="1" max="99999" name="sum" class="sum daily"><input type="text" placeholder="What" name="what" class="what">
+	</div>
+
+	<div class="content-padded">
+		<button class="btn btn-positive btn-block" id="add" type="submit" disabled="disabled">Add</button>
+	</div>
+	</form>
+</template>

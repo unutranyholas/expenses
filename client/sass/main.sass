@@ -1,0 +1,342 @@
+@import compass/css3/user-interface
+@import compass/css3/transform
+@import compass/css3/transition
+@import compass/css3/animation
+
+//colors
+
+$d-color: #666
+
+$m-color: #0067FF
+$e-color: #FF007F
+
+$text-color: #000
+$bg-color: #DAF7FF
+
+//fonts
+$text-regular: 300 17px /*'Source Sans Pro', */ 'Helvetica Neue', helvetica, arial, sans-serif
+$text-bold: bold 17px /*'Source Sans Pro', */ 'Helvetica Neue', helvetica, arial, sans-serif
+
+$text-small-regular: 300 12px /*'Source Sans Pro', */ 'Helvetica Neue', helvetica, arial, sans-serif
+$text-small-bold: bold 12px /*'Source Sans Pro', */ 'Helvetica Neue', helvetica, arial, sans-serif
+
+
+
+
+body
+	font: $text-regular
+	-webkit-tap-highlight-color: rgba(0,0,0,0)
+
+.content
+	overflow: hidden
+	position: relative
+
+.add-record
+	background-color: $bg-color
+	padding: 10px 0 0 10px
+	overflow: hidden
+	ul
+		margin: 0 0 10px
+		padding: 0
+		display: table
+		width: calc(100% - 10px)
+		font: $text-regular
+		li
+			display: table-cell
+			list-style: none
+			width: 33%
+			label
+				text-align: center
+				display: block
+				&.daily
+					color: $d-color			
+				&.monthly
+					color: $m-color	
+				&.extra
+					color: $e-color
+			input
+				opacity: 0
+				position: absolute
+				&:checked
+					& + label
+						border: 1px solid
+						padding: 6px
+						&.daily
+							border-color: $d-color			
+						&.monthly
+							border-color: $m-color	
+						&.extra
+							border-color: $e-color
+	input
+		background-color: transparent
+		border: none
+		height: 44px
+		margin: 0
+		padding: 0
+		border-radius: 0
+		+input-placeholder
+			font-weight: 300
+		&.sum
+			border-right: 1px solid rgba(0, 0, 0, 0.2)
+			text-align: right
+			width: 20%
+			padding-right: 8px
+			font: $text-bold
+			&.daily
+				color: $d-color			
+			&.monthly
+				color: $m-color	
+			&.extra
+				color: $e-color
+		&.what
+			padding-left: 8px
+			width: calc(80% - 17px)
+		&:focus
+			outline: none
+			background-color: rgba(255, 255, 255, 0.8)
+	button
+		font-size: 17px
+		line-height: 22px
+		background-color: transparent
+		background-color: #4CD764
+		color: #fff
+		padding: 11px 0px 11px
+		text-align: center
+		width: 60px
+		z-index: 50
+		//margin-left: -120px
+		position: absolute
+		right: 0
+		border: none
+		+transform (translate(0px, -44px))
+		+transition (transform 0.2s cubic-bezier(.67,.1,.94,.45))
+		&:focus
+			outline: none
+		&:disabled
+			+transform (translate(100px, -44px))
+
+.list-records
+	padding: 10px 0px 100px 10px
+	margin: 0
+	.table-view-divider
+		border-bottom: 1px solid shade(#fff, 20)
+		font: $text-small-regular
+		padding: 4px 10px
+		position: relative
+		z-index: 100
+	li
+		line-height: 0px
+		&.daily dt
+			color: $d-color			
+		&.monthly dt
+			color: $m-color	
+		&.extra dt
+			color: $e-color
+		&.delete-mode
+			dl
+				+transform (translateX(-100px))
+				//width: calc(100%)
+			.delete
+				display: inline-block
+	dl
+		margin: 0
+		padding: 0
+		overflow: hidden
+		+transition (transform 0.2s cubic-bezier(.67,.1,.94,.45))
+		display: inline-block
+		width: 100%
+		position: relative
+		z-index: 100
+		background-color: #fff
+		line-height: 21px
+		//box-shadow: inset 0px 0px 1px #000
+	dt
+		width: 20%
+		display: inline-block
+		text-align: right
+		margin: 0
+		padding: 11px 12px 11px 0px
+		font: $text-bold
+	dd
+		width: calc(80% - 48px)
+		display: inline-block
+		margin: 0
+		padding: 11px 0px
+		//overflow: hidden
+		white-space: nowrap
+a.delete
+	//display: none
+	margin: 0px
+	font-size: 17px
+	line-height: 22px
+	background-color: transparent
+	background-color: #fc3e39
+	color: #fff
+	padding: 11px 0px 11px
+	text-align: center
+	width: 100px
+	z-index: 50
+	//margin-left: -120px
+	position: absolute
+	right: 0
+	+transform (translateY(-44px))
+
+
+.short-stats
+	+transform (translateZ(0))
+	position: fixed
+	width: 100%
+	left: 0
+	bottom: 0
+	background-color: $bg-color
+	text-align: center
+	vertical-align: top
+	z-index: 150
+	&> div
+		display: inline-block
+		padding: 5px 5px
+		text-align: left
+		vertical-align: top
+	dl
+		display: block
+		font-size: 11px
+		line-height: 14px
+		margin: 0
+	dt
+		display: inline-block
+		width: 45px
+		margin: 0
+	dd
+		display: inline-block
+		width: 45px
+		margin: 0
+		text-align: right
+	em
+		font-style: normal
+		color: #999
+
+	div.chart
+		height: 3px
+		display: block
+		width: 90px
+		line-height: 3px
+		margin-top: -3px
+		margin-bottom: 6px
+		white-space: nowrap
+		& div
+			height: 1px
+			display: inline-block
+			width: auto
+			&.daily
+				background-color: $d-color
+			&.monthly
+				background-color: $m-color
+				box-shadow: inset 1px 0px 0px 0px rgba(255, 255, 255, 0.5)
+			&.extra
+				background-color: $e-color
+				box-shadow: inset 1px 0px 0px 0px rgba(255, 255, 255, 0.5)
+
+
+
+
+.graph
+	background-color: #fff
+	width: 100%
+	overflow: scroll
+	direction: rtl
+	path.line
+		fill: none
+		stroke: #000
+
+	path.last1
+		stroke-width: 0.2px
+
+	path.last30
+		stroke: #00f
+
+	path.total.last7
+		stroke-width: 2px
+		stroke-opacity: 0.8
+
+	path.total
+		stroke-width: 1px
+		stroke-opacity: 0.2
+
+	path.daily
+		stroke: #666
+
+	path.monthly
+		stroke: #0052FF
+
+	path.extra
+		stroke: #DD1474
+
+.axis 
+	path
+		fill: none
+		stroke: none
+
+	line
+		fill: none
+		stroke: #000
+		stroke-width: 1px
+
+	&.y line
+		stroke-dasharray: 1, 3
+		stroke-opacity: 0.2
+
+	text
+		font-size: 10px
+		width: 50px
+		text-align: right
+
+.stats H2
+	position: absolute
+	font-size: 16px
+	margin: 15px
+
+.dot
+	fill-opacity: 0.3
+
++keyframes (loading)
+	0%
+		+transform (rotate(0deg))
+	100%
+		+transform (rotate(360deg))
+
+.pagesLoadingDefaultCont
+	position: absolute
+	z-index: 1000
+	bottom: 80px
+
+.pagesLoadingDefault
+	background-color: transparent
+	background-image: none
+	width: auto
+	margin: 0
+	padding: 0
+
+.pagesLoadingDefault
+	position: absolute
+	display: block
+	left: 50%
+	+transform (translate(-25px, -15px))
+	&:before
+		position: absolute
+		width: 30px
+		height: 30px
+		border-radius: 15px
+		background: linear-gradient(-135deg, shade($bg-color, 10) 50%, #FFFFFF 100%)
+		+animation (loading 0.5s infinite linear)
+		content: ''
+	&:after
+		width: 28px
+		height: 28px
+		background: #fff
+		border-radius: 14px
+		content: ''
+		position: absolute
+		+transform (translate(1px, 1px))
+
+.pagesLoadingDefault IMG
+	display: none
