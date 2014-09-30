@@ -1,3 +1,20 @@
+/*TODO*/
+
+/*Template.statsFromServer.helpers({
+	'count': function(){
+		return Session.get('count') || 'Loading';
+	}
+});
+
+Template.statsFromServer.rendered = function(){
+	Deps.autorun(function() {
+		Meteor.call('getHistory2', function(error, result){
+			Session.set('count', result);
+		});
+	});	
+};*/
+
+
 Template.stats.helpers({
 	'chart': function(){
 
@@ -5,8 +22,6 @@ Template.stats.helpers({
 		from: moment().subtract(30, 'days').valueOf(),
 		to: moment().valueOf(),
 		period: 7 };
-
-	//console.log(getHistory(options));
 
 	var result = getHistory(options);
 
@@ -18,10 +33,6 @@ Template.stats.helpers({
 		return { width: Math.floor(num.sum / max.sum * 80) + '%',
 				 avr: num.avr,
 				 date: num.date } });
-
-	//console.log(size);
-
-	//console.log(max);
 
 	return size;
 	}
@@ -48,19 +59,10 @@ Template.shortStats.events({
 	} 
 });
 
-/*
-Template.stats.events({
-	'click': function(e){
-		Router.go('/');
-	} 
-});
-*/
-
 Template.average.rendered = function () {
 
 	var barWidth = 12;
 	var lastDays = 60;
-
 
 	var options = {
 		from: moment().subtract(lastDays, 'days').valueOf(),
@@ -85,8 +87,6 @@ Template.average.rendered = function () {
 	var y = d3.scale.linear()
 		.range([height, 0]);
 
-	//y.domain([0, 0]);
-
 	var xAxis = d3.svg.axis()
 		.scale(x)
 		.ticks(Math.floor(lastDays/7))
@@ -96,7 +96,7 @@ Template.average.rendered = function () {
 
 	var yAxis = d3.svg.axis()
 		.scale(y)
-		.ticks(4)
+		.ticks(5)
 		.tickSize(width, 0)
 		.tickPadding(30)
 		.tickFormat(d3.format(".0f"))
@@ -126,7 +126,7 @@ Template.average.rendered = function () {
 			to: moment().valueOf(),
 			period: 30,
 			interpolate: 'basis',
-			focus: true
+			//focus: true
 		},
 		{
 			from: moment().subtract(lastDays, 'days').valueOf(),
@@ -134,33 +134,9 @@ Template.average.rendered = function () {
 			period: 1,
 			interpolate: function(points){ return lineBar(points, 0.9)}
 		}
-		/*
-		{
-			from: moment().subtract(lastDays, 'days').valueOf(),
-			to: moment().valueOf(),
-			period: 1,
-			interpolate: function(points){ return lineBar(points, 0.9)},
-			category: 'monthly'
-		},
-		{
-			from: moment().subtract(lastDays, 'days').valueOf(),
-			to: moment().valueOf(),
-			period: 1,
-			interpolate: function(points){ return lineBar(points, 0.9)},
-			category: 'daily'
-		},
-		{
-			from: moment().subtract(lastDays, 'days').valueOf(),
-			to: moment().valueOf(),
-			period: 1,
-			interpolate: function(points){ return lineBar(points, 0.9)},
-			category: 'extra'
-		}*/
 	];
 
 	var drawChart = function(options) {
-
-		//console.log(options);
 
 		var data = getHistory(options);
 
@@ -173,15 +149,6 @@ Template.average.rendered = function () {
 
 		var paths = svg.selectAll("path.line.last" + options.period + '.' + (options.category || 'total'))
 			.data([data]);
-
-		/*var oldDomain = y.domain();
-		var newDomain = d3.extent(data, function(d) { return d.avr; });
-
-		console.log(oldDomain[0]);
-		console.log(newDomain[0]);
-
-		x.domain(d3.extent(data, function(d) { return d.date; }));
-		y.domain([d3.min([oldDomain[0], newDomain[0]]), d3.max([oldDomain[1], newDomain[1]])]);*/
 
 		if (options.focus) {
 			x.domain(d3.extent(data, function(d) { return d.date; }));
@@ -222,102 +189,6 @@ Template.average.rendered = function () {
 
 };
 
-
-Template.distribution.rendered = function () {
-
-	var margin = {top: 80, right: 40, bottom: 80, left: 10},
-		width = 640 - margin.left - margin.right,
-		height = 300 - margin.top - margin.bottom;
-
-	var svg = d3.select('#distribution')
-		.attr('width', width + margin.left + margin.right)
-		.attr('height', height + margin.top + margin.bottom)
-	.append("g")
-		.attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")");
-
-	var x = d3.scale.linear()
-		.domain([0, 23])
-		.range([0, width]);
-
-	var y = d3.scale.linear()
-		.domain([0, 6])
-		.range([0, height]);
-
-	var size = d3.scale.linear()
-		.range([0.5, height/14]);
-
-	//y.domain([0, 0]);
-
-	var xAxis = d3.svg.axis()
-		.scale(x)
-		.ticks(24)
-		.tickSize(6, 0)
-		.tickPadding(6)
-		.orient("bottom");
-
-	var yAxis = d3.svg.axis()
-		.scale(y)
-		.ticks(7)
-		.tickSize(width, 0)
-		.tickPadding(30)
-		.tickFormat(d3.format(".0f"))
-		.orient("right");
-
-	svg.append("g")
-		.attr("class", "x axis");
-
-	svg.append("g")
-		.attr("class", "y axis");
-
-Deps.autorun(function() {
-
-	var data = summarize(Records.find().fetch());
-
-	/*size.domain ();
-
-	data.forEach(function(day, i){
-		svg.selectAll(".dot" + i)
-			.data(day)
-		.enter().append("circle")
-      		.attr("class", "dot dot" + i)
-      		.attr('r', function(d) {return size(d)})
-      		.attr('cy', function(d) { console.log(i); return y(i); })
-      		.attr('cx', function(d, j) { console.log(j); return x(j); })
-
-	});*/
-/*
-	svg.selectAll(".dot")
-      .data(data)
-    .enter().append("g")
-    	.attr('style', function(d, i) {console.log(d, i); return 'translate(0, ' + y(i) +')'})
-    .enter().append("circle")
-      .attr("class", "dot")
-      //.attr('r', function(d, j) {condole.log(d, j); return size(d)})
-      //.attr("r", 3.5)
-      //.attr("cx", function(d, i, j) { console.log(d, j, i); return d; })
-      //.attr("cy", function(d) { return y(d.sepalLength); })
-      //.style("fill", function(d) { return color(d.species); });
-		
-      console.log(data);
-*/
-
-}); 
-
-};
-
-
-var summarize = function(data){
-	var result = _.range(7).map(function(n) { return _.range(24).map(function(n) { return 0; }); });
-
-	data.forEach(function(d){
-		var weekday = moment(d.date).day();
-		var hour = moment(d.date).hour();
-
-		result[weekday][hour] += +d.sum;
-	});
-
-	return result;
-}
 
 var filterByPeriod = function(from, to) {
 

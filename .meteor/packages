@@ -5,6 +5,10 @@
 
 meteor-platform
 iron:router
-alethes:pages
 d3
 mrt:moment
+accounts-password
+zimme:iron-router-auth
+accounts-ui-unstyled
+pages
+

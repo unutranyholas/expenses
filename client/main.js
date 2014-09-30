@@ -1,3 +1,3 @@
-Meteor.subscribe('allRecords');
+Meteor.subscribe('records');
 
 //backup: JSON.stringify(Records.find().fetch());

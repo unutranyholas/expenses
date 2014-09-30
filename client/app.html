@@ -1,10 +1,14 @@
 <template name="app">
+	<div class="login">
+		{{> loginButtons}}
+	</div>
 	<div class="content">
 		{{> add}}
 		<ul class="list-records">
 		{{> records}}
 		</ul>
 		{{> shortStats}}
+		<!--{{> statsFromServer}}-->
 	</div>
 </template>
 
@@ -13,8 +17,10 @@
     {{> pagesNav}}
 </template>
 
-
-<template name="settings">
-	123
+<template name="signIn">
+	{{> loginButtons}}
 </template>
+
+
+
 

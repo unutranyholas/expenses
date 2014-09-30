@@ -11,14 +11,16 @@ Pages = new Meteor.Pagination(Records, {
 
 Records.allow({
 	insert: function(userId, doc) {
-		return 1;
+		return !! userId;
 	},
 	remove: function(userId, doc) {
-		return 1;
+		return !! userId;
 	},
 	update: function(userId, doc) {
-		return 1;
+		return !! userId;
 	},
 });
 
-//console.log(moment() + ' records');
+Accounts.config({
+	forbidClientAccountCreation: true
+});
