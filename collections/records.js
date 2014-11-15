@@ -5,7 +5,7 @@ Pages = new Meteor.Pagination(Records, {
 	itemTemplate: 'list',
 	//layoutTemplate: 'layout',
 	sort: {date: -1},
-	router: 'iron-router',
+	router: 'iron-router'
 	//fastRender: true
 });
 
@@ -18,7 +18,7 @@ Records.allow({
 	},
 	update: function(userId, doc) {
 		return !! userId;
-	},
+	}
 });
 
 Accounts.config({
